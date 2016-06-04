@@ -287,13 +287,14 @@ public class Lang extends JFrame implements ActionListener{
         private int cellX, cellY;
          public void paint(Graphics g) {
 
+              for(int i = 0; i < add; i++){
 
+                  g.drawImage(antImage, ants[i].getX(), ants[i].getY(), ZOOM, ZOOM, null); 
+               }
              
             for(int x = 0; x < wid - 1; x++){
                 for(int y = 0; y < hei - 1; y++){
-                  for(int i = 0; i < add; i++){
-                    g.drawImage(antImage, ants[i].getX(), ants[i].getY(), x * ZOOM, y * ZOOM, null); 
-                   }
+
                    g.setColor(colors[x][y]);
                    g.fillRect(x * ZOOM, y * ZOOM, ZOOM, ZOOM);
                 }
