@@ -287,23 +287,19 @@ public class Lang extends JFrame implements ActionListener{
         private int cellX, cellY;
          public void paint(Graphics g) {
 
-              for(int i = 0; i < add; i++){
-
-                  g.drawImage(antImage, ants[i].getX(), ants[i].getY(), ZOOM, ZOOM, null); 
-               }
-             
             for(int x = 0; x < wid - 1; x++){
                 for(int y = 0; y < hei - 1; y++){
-
-                   g.setColor(colors[x][y]);
-                   g.fillRect(x * ZOOM, y * ZOOM, ZOOM, ZOOM);
+                    for(int i = 0; i < add; i++){
+                        if(ants[i].getX() == x && ants[i].getY() == y){
+                           antImage = new ImageIcon("ant.png").getImage();
+                           g.drawImage(antImage, x*ZOOM, y*ZOOM, null); 
+                        }else{              
+                           g.setColor(colors[x][y]);
+                           g.fillRect(x * ZOOM, y * ZOOM, ZOOM, ZOOM);
+                        }
+                    }
                 }
-            }
-            
-
-            g.setColor(Color.GREEN);    //zmienić
-            g.fillRect(colors[0].length / 2 * ZOOM, colors.length / 2 * ZOOM, ZOOM/2, ZOOM/2);
-            
+            }            
             
             addMouseListener(new MouseAdapter() {
 
