@@ -3,6 +3,7 @@ import java.awt.Color;
 import java.awt.Container;
 import java.awt.Graphics;
 import java.awt.Image;
+import java.awt.Rectangle;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.awt.event.MouseAdapter;
@@ -33,7 +34,9 @@ public class Lang extends JFrame implements ActionListener{
         private int add = 1;
         private boolean jump = false;
         private Image antImage;
+        private Image deadImage;
         private int stepsToJump;
+        Graphics g;
 	private final int ZOOM = 6;
         private Color[] antColor = { Color.GREEN, Color.BLUE, Color.RED, Color.MAGENTA, Color.ORANGE, 
                                      Color.YELLOW, Color.GRAY, Color.CYAN, Color.PINK, Color.LIGHT_GRAY };
@@ -53,91 +56,95 @@ public class Lang extends JFrame implements ActionListener{
                     if(jump){
                         for(int j = 0; j < stepsToJump; j++){
                             for(int i = 0; i < add; i++){
-                                if(colors[ants[i].getX()][ants[i].getY()] == Color.WHITE){
-                                        //turn left
-                                        if(ants[i].getXchange() == 0){ //if moving up or down
-                                                ants[i].setXchange(ants[i].getYchange());
-                                                ants[i].setYchange(0);
-                                        }else{ //if moving left or right
-                                                ants[i].setYchange(-ants[i].getXchange());
-                                                ants[i].setXchange(0);
-                                        }
-                                         colors[ants[i].getX()][ants[i].getY()] = ants[i].getColoro();
-                                }else{
-                                        //turn right
-                                        if(ants[i].getXchange() == 0){ //if moving up or down
-                                                ants[i].setXchange(-ants[i].getYchange());
-                                                ants[i].setYchange(0);
+                                if(ants[i].exist()){
+                                    if(colors[ants[i].getX()][ants[i].getY()] == Color.WHITE){
+                                            //turn left
+                                            if(ants[i].getXchange() == 0){ //if moving up or down
+                                                    ants[i].setXchange(ants[i].getYchange());
+                                                    ants[i].setYchange(0);
+                                            }else{ //if moving left or right
+                                                    ants[i].setYchange(-ants[i].getXchange());
+                                                    ants[i].setXchange(0);
+                                            }
+                                             colors[ants[i].getX()][ants[i].getY()] = ants[i].getColoro();
+                                    }else{
+                                            //turn right
+                                            if(ants[i].getXchange() == 0){ //if moving up or down
+                                                    ants[i].setXchange(-ants[i].getYchange());
+                                                    ants[i].setYchange(0);
 
-                                        }else{ //if moving left or right
-                                                ants[i].setYchange(ants[i].getXchange());
-                                                ants[i].setXchange(0);
-                                        }
-                                         colors[ants[i].getX()][ants[i].getY()] = Color.WHITE;
-                                }
-                                ants[i].setX(ants[i].getX() + ants[i].getXchange());
-                                ants[i].setY(ants[i].getY() + ants[i].getYchange());
+                                            }else{ //if moving left or right
+                                                    ants[i].setYchange(ants[i].getXchange());
+                                                    ants[i].setXchange(0);
+                                            }
+                                             colors[ants[i].getX()][ants[i].getY()] = Color.WHITE;
+                                    }
+                                    ants[i].setX(ants[i].getX() + ants[i].getXchange());
+                                    ants[i].setY(ants[i].getY() + ants[i].getYchange());
 
-                                if(ants[i].getX() == 0 ){
-                                    ants[i].setX(wid-1 + ants[i].getXchange());
-                                }
-                                else if(ants[i].getX() == wid-1){
-                                    ants[i].setX(0 + ants[i].getXchange());
-                                }
+                                    if(ants[i].getX() == 0 ){
+                                        ants[i].setX(wid-1 + ants[i].getXchange());
+                                    }
+                                    else if(ants[i].getX() == wid-1){
+                                        ants[i].setX(0 + ants[i].getXchange());
+                                    }
 
-                                if(ants[i].getY() == 0){
-                                    ants[i].setY(hei-1 + ants[i].getYchange());
-                                }
-                                else if(ants[i].getY() == hei-1){
-                                    ants[i].setY(0 + ants[i].getYchange());
-                                }
+                                    if(ants[i].getY() == 0){
+                                        ants[i].setY(hei-1 + ants[i].getYchange());
+                                    }
+                                    else if(ants[i].getY() == hei-1){
+                                        ants[i].setY(0 + ants[i].getYchange());
+                                    }
 
-                            }
-                           
+                                }
+                            }                          
                         }
                         jump = false;
                         stepsToJump=0;
+                        
                     } else {
                             for(int i = 0; i < add; i++){
-                                if(colors[ants[i].getX()][ants[i].getY()] == Color.WHITE){
-                                        //turn left
-                                        if(ants[i].getXchange() == 0){ //if moving up or down
-                                                ants[i].setXchange(ants[i].getYchange());
-                                                ants[i].setYchange(0);
-                                        }else{ //if moving left or right
-                                                ants[i].setYchange(-ants[i].getXchange());
-                                                ants[i].setXchange(0);
-                                        }
-                                         colors[ants[i].getX()][ants[i].getY()] = ants[i].getColoro();
-                                }else{
-                                        //turn right
-                                        if(ants[i].getXchange() == 0){ //if moving up or down
-                                                ants[i].setXchange(-ants[i].getYchange());
-                                                ants[i].setYchange(0);
+                                if(ants[i].exist()){
+                                    if(colors[ants[i].getX()][ants[i].getY()] == Color.WHITE){
+                                            //turn left
+                                            if(ants[i].getXchange() == 0){ //if moving up or down
+                                                    ants[i].setXchange(ants[i].getYchange());
+                                                    ants[i].setYchange(0);
+                                            }else{ //if moving left or right
+                                                    ants[i].setYchange(-ants[i].getXchange());
+                                                    ants[i].setXchange(0);
+                                            }
+                                             colors[ants[i].getX()][ants[i].getY()] = ants[i].getColoro();
+                                    }else{
+                                            //turn right
+                                            if(ants[i].getXchange() == 0){ //if moving up or down
+                                                    ants[i].setXchange(-ants[i].getYchange());
+                                                    ants[i].setYchange(0);
 
-                                        }else{ //if moving left or right
-                                                ants[i].setYchange(ants[i].getXchange());
-                                                ants[i].setXchange(0);
-                                        }
-                                         colors[ants[i].getX()][ants[i].getY()] = Color.WHITE;
-                                }
-                                ants[i].setX(ants[i].getX() + ants[i].getXchange());
-                                ants[i].setY(ants[i].getY() + ants[i].getYchange());
+                                            }else{ //if moving left or right
+                                                    ants[i].setYchange(ants[i].getXchange());
+                                                    ants[i].setXchange(0);
+                                            }
+                                             colors[ants[i].getX()][ants[i].getY()] = Color.WHITE;
+                                    }
+                                    ants[i].setX(ants[i].getX() + ants[i].getXchange());
+                                    ants[i].setY(ants[i].getY() + ants[i].getYchange());
 
-                                if(ants[i].getX() == 0 ){
-                                    ants[i].setX(wid-1 + ants[i].getXchange());
-                                }
-                                else if(ants[i].getX() == wid-1){
-                                    ants[i].setX(0 + ants[i].getXchange());
-                                }
+                                    if(ants[i].getX() == 0 ){
+                                        ants[i].setX(wid-1 + ants[i].getXchange());
+                                    }
+                                    else if(ants[i].getX() == wid-1){
+                                        ants[i].setX(0 + ants[i].getXchange());
+                                    }
 
-                                if(ants[i].getY() == 0){
-                                    ants[i].setY(hei-1 + ants[i].getYchange());
-                                }
-                                else if(ants[i].getY() == hei-1){
-                                    ants[i].setY(0 + ants[i].getYchange());
-                                }
-                            }      
+                                    if(ants[i].getY() == 0){
+                                        ants[i].setY(hei-1 + ants[i].getYchange());
+                                    }
+                                    else if(ants[i].getY() == hei-1){
+                                        ants[i].setY(0 + ants[i].getYchange());
+                                    }
+                                }  
+                            }
                     }
                     repaint();
                 }
@@ -149,15 +156,22 @@ public class Lang extends JFrame implements ActionListener{
             private Color antColor;
             private int xChange; 
             private int yChange;
-
+            private Image img;
+            private boolean existing;
+            
             public Ant(int x, int y, Color aColor){
+                existing = true;
                 position[0] = x;
                 position[1] = y;
                 antColor = aColor;
                 xChange = 0; 
                 yChange = -1;
+                img = antImage;
             }
 
+            public boolean exist(){
+                return existing;
+            }
             public int getX(){
                 return position[0];
             }
@@ -172,6 +186,12 @@ public class Lang extends JFrame implements ActionListener{
             }
             public int getYchange(){
                 return yChange;
+            }
+            public Image getImage(){
+                return img;
+            }
+            public void dead(){
+                existing = false;
             }
             public void setX(int x){
                 position[0] = x;
@@ -197,6 +217,8 @@ public class Lang extends JFrame implements ActionListener{
             setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 
             antImage = new ImageIcon("ant.png").getImage();
+            deadImage = new ImageIcon("dead.png").getImage();
+            
             add(buttonsPanel());
             drawPanel.setBounds(10,10,wid*ZOOM,hei*ZOOM);
             drawPanel.setBackground(Color.red);
@@ -286,20 +308,34 @@ public class Lang extends JFrame implements ActionListener{
         private Color cellColor;
         private int cellX, cellY;
          public void paint(Graphics g) {
-
+             
             for(int x = 0; x < wid - 1; x++){
-                for(int y = 0; y < hei - 1; y++){
+                for(int y = 0; y < hei - 1; y++){           
+                    g.setColor(colors[x][y]);
+                    g.fillRect(x * ZOOM, y * ZOOM, ZOOM, ZOOM);
+                       
                     for(int i = 0; i < add; i++){
-                        if(ants[i].getX() == x && ants[i].getY() == y){
-                           antImage = new ImageIcon("ant.png").getImage();
-                           g.drawImage(antImage, x*ZOOM, y*ZOOM, null); 
-                        }else{              
-                           g.setColor(colors[x][y]);
-                           g.fillRect(x * ZOOM, y * ZOOM, ZOOM, ZOOM);
+                        if(ants[i].getX() == x && ants[i].getY() == y)
+                            if(ants[i].exist())
+                                g.drawImage(antImage, x*ZOOM, y*ZOOM, null); 
+                            else
+                                g.drawImage(deadImage, x*ZOOM, y*ZOOM, null); 
+                        for(int j = 0; j < add; j++){
+                            if(i == j) {
+                                break;
+                            }else{                          
+                            if(ants[i].exist() && ants[j].exist() && 
+                                    ants[i].getX() > (ants[j].getX() - 5) && ants[i].getX() < (ants[j].getX() + 5) && 
+                                    ants[i].getY() > (ants[j].getY() - 5) && ants[i].getY() < (ants[j].getY() + 5)){
+                                ants[j].dead();
+                            System.out.println("umarło");
+                            }
+                            }
                         }
                     }
                 }
-            }            
+            }         
+                       
             
             addMouseListener(new MouseAdapter() {
 
