@@ -296,10 +296,13 @@ public class Langton extends JFrame implements ActionListener{
                                    ants[i].getX() > (ants[j].getX() - 3) && ants[i].getX() < (ants[j].getX() + 3) && 
                                    ants[i].getY() > (ants[j].getY() - 3) && ants[i].getY() < (ants[j].getY() + 3)){
                                         if(!ants[i].getParent()){
-                                            ants[i].setParent();                                           
+                                            ants[i].setParent();       
+                                            ants[j].setParent();
                                             if(add < 100)
                                                 add++;
                                         }
+                                        if(ants[i].getParent() && ants[j].getParent())
+                                            ants[j].dead();
                                 }
                             }
                         }
